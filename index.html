@@ -1,0 +1,232 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Shu's Blog - 欢迎来到我的博客！</title><meta name="author" content="Shu"><meta name="copyright" content="Shu"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="Postgradute">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Shu&#39;s Blog">
+<meta property="og:url" content="https://shu113.github.io/index.html">
+<meta property="og:site_name" content="Shu&#39;s Blog">
+<meta property="og:description" content="Postgradute">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s1.ax1x.com/2023/06/11/pCZPfxO.jpg">
+<meta property="article:author" content="Shu">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s1.ax1x.com/2023/06/11/pCZPfxO.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://shu113.github.io/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2023-06-13 21:48:26'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://s1.ax1x.com/2023/06/11/pCZPfxO.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">12</div></a></div></div></div><hr/></div></div><div id="body-wrap"><header class="full_page" id="page-header" style="background-image: url(https://s1.ax1x.com/2023/06/12/pCewzsP.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Shu's Blog</a></span><span id="menus"><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="site-info"><h1 id="site-title">Shu's Blog</h1><div id="site-subtitle"><span id="subtitle"></span></div><div id="site_social_icons"><a class="social-icon" href="https://github.com/SHU113" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:sz13129935787@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2023/06/13/%E8%8B%B1%E8%AF%AD%E4%BD%9C%E6%96%87%E6%A8%A1%E6%9D%BF/" title="英语作文模板">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="英语作文模板"></a></div><div class="recent-post-info"><a class="article-title" href="/2023/06/13/%E8%8B%B1%E8%AF%AD%E4%BD%9C%E6%96%87%E6%A8%A1%E6%9D%BF/" title="英语作文模板">英语作文模板</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-06-13T12:10:50.415Z" title="发表于 2023-06-13 20:10:50">2023-06-13</time></span></div><div class="content">There has been much discussion revolving around the issue of … . As far as I’m concerned, I firmly believe that it is advisable for … to … .
+There are a tremendous number of reason to support this viewpoint. First and foremost,the major reason is that… . … is instrumental in achieving … success. It promotes… Additionally,   … help us improve … ability,solve problem with … ,and play important role. 
+Furthermore, the second noteworthy reason is that … enhance interpersonal relationship. This is du ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2023/06/12/%E6%94%BF%E6%B2%BB%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/" title="政治期末考试">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="政治期末考试"></a></div><div class="recent-post-info"><a class="article-title" href="/2023/06/12/%E6%94%BF%E6%B2%BB%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/" title="政治期末考试">政治期末考试</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-06-12T01:34:34.502Z" title="发表于 2023-06-12 09:34:34">2023-06-12</time></span></div><div class="content">1.新时代党的建设总要求原则是坚持和加强党的全面领导
+方针是坚持党要管党、全面从严治党
+主线是加强党的长期执政能力建设、先进性和纯洁性建设
+总体布局是以党的政治建设为统领，以坚定理想信念宗旨为根基，以调动全党积极性、主动性、创造性为着力点，全面推进党的建设
+目标是不断提高党的建设质量，把党建设成为始终走在时代前列、人民衷心拥护的马克思主义执政党。
+2.党的领导是中国特色社会主义最本质的特征是否坚持中国共产党的领导，直接关系着中国特色社会主义的性质、前途和命运。只有社会主义才能救中国，中国共产党挽救民族危亡的唯一正确选择就是走社会主义道路；中国共产党建设社会主义现代化强国、实现中华民族伟大复兴的唯一正确道路就是走中国特色社会主义道路。只有坚持党的领导才能使中国特色社会主义制度不变质，中国特色社会主义旗帜不变色，中国特色社会主义道路不偏移。中国共产党始终是中国特色社会主义事业的开创者、引领者和推动者。党的领导是中国特色社会主义最本质的特征，在坚持党的领导这一重大原则上，我们绝不能有任何含糊和动摇。
+3.新时代中国特色社会主义生态文明建设理论的主要内容生态文明建设的根本保证是坚持党对生态文明 ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2023/06/11/C++%E6%8F%90%E9%AB%98%E7%BC%96%E7%A8%8B/" title="c++提高编程">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="c++提高编程"></a></div><div class="recent-post-info"><a class="article-title" href="/2023/06/11/C++%E6%8F%90%E9%AB%98%E7%BC%96%E7%A8%8B/" title="c++提高编程">c++提高编程</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-06-11T11:29:30.821Z" title="发表于 2023-06-11 19:29:30">2023-06-11</time></span></div><div class="content">
+本阶段主要针对C++&#x3D;&#x3D;泛型编程&#x3D;&#x3D;和&#x3D;&#x3D;STL&#x3D;&#x3D;技术做详细讲解，探讨C++更深层的使用
+
+1 模板1.1 模板的概念模板就是建立通用的模具，大大提高复用性
+例如生活中的模板
+一寸照片模板：
+
+PPT模板：
+
+
+模板的特点：
+
+模板不可以直接使用，它只是一个框架
+模板的通用并不是万能的
+
+1.2 函数模板
+C++另一种编程思想称为 &#x3D;&#x3D;泛型编程&#x3D;&#x3D; ，主要利用的技术就是模板
+
+C++提供两种模板机制:函数模板和类模板
+
+
+1.2.1 函数模板语法函数模板作用：
+建立一个通用函数，其函数返回值类型和形参类型可以不具体制定，用一个虚拟的类型来代表。
+语法： 
+12template&lt;typename T&gt;函数声明或定义
+
+解释：
+template  —  声明创建模板
+typename  — 表面其后面的符号是一种数据类型，可以用class代替
+T    —   通用的数据类型，名称可以替换，通常为大写字母
+示例：
+123456789101112131415 ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2023/06/11/C++%E6%A0%B8%E5%BF%83%E7%BC%96%E7%A8%8B/" title="c++核心编程">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="c++核心编程"></a></div><div class="recent-post-info"><a class="article-title" href="/2023/06/11/C++%E6%A0%B8%E5%BF%83%E7%BC%96%E7%A8%8B/" title="c++核心编程">c++核心编程</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-06-11T11:29:30.799Z" title="发表于 2023-06-11 19:29:30">2023-06-11</time></span></div><div class="content">本阶段主要针对C++&#x3D;&#x3D;面向对象&#x3D;&#x3D;编程技术做详细讲解，探讨C++中的核心和精髓。
+1 内存分区模型C++程序在执行时，将内存大方向划分为4个区域
+
+代码区：存放函数体的二进制代码，由操作系统进行管理的
+全局区：存放全局变量和静态变量以及常量
+栈区：由编译器自动分配释放, 存放函数的参数值,局部变量等
+堆区：由程序员分配和释放,若程序员不释放,程序结束时由操作系统回收
+
+内存四区意义：
+不同区域存放的数据，赋予不同的生命周期, 给我们更大的灵活编程
+1.1 程序运行前​	在程序编译后，生成了exe可执行程序，未执行该程序前分为两个区域
+​	代码区：
+​		存放 CPU 执行的机器指令
+​		代码区是共享的，共享的目的是对于频繁被执行的程序，只需要在内存中有一份代码即可
+​		代码区是只读的，使其只读的原因是防止程序意外地修改了它的指令
+​	全局区：
+​		全局变量和静态变量存放在此.
+​		全局区还包含了常量区, 字符串常量和其他常量也存放在此.
+​		&#x3D;&#x3D;该区域的数据在程序结束后由操作系统释放&#x3D;&#x3D;.
+示例 ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2023/06/11/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" title="数据结构">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="数据结构"></a></div><div class="recent-post-info"><a class="article-title" href="/2023/06/11/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" title="数据结构">数据结构</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-06-11T11:29:30.786Z" title="发表于 2023-06-11 19:29:30">2023-06-11</time></span></div><div class="content">栈（stack）1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253#include&lt;stdio.h&gt;#include &lt;stdbool.h&gt;//布尔函数头文件#include&lt;stdlib.h&gt;//malloc头文件#define Maxsize 10#define Elemtype inttypedef struct Sqstack&#123;	Elemtype data[Maxsize];	int top;&#125;Sqstack;void initStack(Sqstack* s)//初始化&#123;	s-&gt;top = -1;//栈空&#125;bool StackEmpty(Sqstack s)//判断栈空，不用从函数带值到函数外，形参可直接传stack&#123;	if (s.top==-1)	&#123;		return true;	&#125;	else	&#123;		return  ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2023/06/11/%E7%AC%AC%E4%B8%80%E7%AB%A0/" title="c++学习笔记">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="c++学习笔记"></a></div><div class="recent-post-info"><a class="article-title" href="/2023/06/11/%E7%AC%AC%E4%B8%80%E7%AB%A0/" title="c++学习笔记">c++学习笔记</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-06-11T11:29:30.777Z" title="发表于 2023-06-11 19:29:30">2023-06-11</time></span></div><div class="content">#include#includeusing namespace std;&#x2F;&#x2F;使用姓名空间，类似调用标准输入输出库
+int main(){    cout &lt;&lt; “hello,world” &lt;&lt; endl&lt;&lt;”ai”&lt;&lt;endl;&#x2F;&#x2F;小于号表示数据流的方向    cout &lt;&lt; 0b111111 &lt;&lt; endl;&#x2F;&#x2F;十进制的输出是默认的，任何输出都会转换成十进制    cout &lt;&lt; bitset&lt;8&gt;(00001010)&lt;&lt;endl;&#x2F;&#x2F;二进制的输出    cout &lt;&lt; oct &lt;&lt; 0123&lt;&lt;endl;&#x2F;&#x2F;八进制    cout &lt;&lt; hex &lt;&lt; 0xff;&#x2F;&#x2F;十六进制    return 0;}
+整型变量#includeusing namespace std;int num;&#x2F;&#x ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2023/06/11/STM32/" title="STM32">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="STM32"></a></div><div class="recent-post-info"><a class="article-title" href="/2023/06/11/STM32/" title="STM32">STM32</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-06-11T11:29:30.767Z" title="发表于 2023-06-11 19:29:30">2023-06-11</time></span></div><div class="content">STM32
+学习写固件库
+1234567891011121314151617181920212223242526272829303132333435363738#define PERIPH_BASE ((unsigned int)0x40000000)//把地址转成无符号数整形，不然编译器只会当成一个立即数处理#define APB1PERIPH_BASE PERIPH_BASE#define APB2PERIPH_BASE (APB1PERIPH_BASE+0x10000)#define AHBPERIPH_BASE (PERIPH_BASE+0x20000)#define RCC_BASE (AHBPERIPH_BASE+0x1000)#define GPIOB_BASE (APB2PERIPH_BASE+0x0C00)#define RCC_APB2ENR *(unsigned int*)(RCC_BASE+0x18)//一个无符号数的指针，解指针	typedef  unsigned int      uint32_t;typedef  unsigned short    uin ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2023/06/11/qt%E5%AD%A6%E4%B9%A0/" title="QT学习笔记">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="QT学习笔记"></a></div><div class="recent-post-info"><a class="article-title" href="/2023/06/11/qt%E5%AD%A6%E4%B9%A0/" title="QT学习笔记">QT学习笔记</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-06-11T11:29:30.749Z" title="发表于 2023-06-11 19:29:30">2023-06-11</time></span></div><div class="content">创建第一个QT程序1234567891011#include &quot;mywidget.h&quot;#include &lt;QApplication&gt;//包含一个应用程序类的头文件int main(int argc, char *argv[])&#123;    QApplication a(argc, argv);//应用程序对象，有且只有一个    myWidget w;//窗口对象继承的父类Qwidget    w.show();    return a.exec();//应用程序对象进入到消息循环&#125;
+
+12345678910111213141516#ifndef MYWIDGET_H//防止头文件被重复包含#define MYWIDGET_H#include &lt;QWidget&gt;class myWidget : public QWidget&#123;    Q_OBJECT//允许使用信息和槽机制public:    myWidget(QWidget *parent =  0);    ~myWidget();&#125;;#endif // ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2023/06/11/C%E8%AF%AD%E8%A8%80%E7%BB%83%E4%B9%A0%E9%A2%98%E7%AC%94%E8%AE%B0/" title="C语言练习题笔记">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C语言练习题笔记"></a></div><div class="recent-post-info"><a class="article-title" href="/2023/06/11/C%E8%AF%AD%E8%A8%80%E7%BB%83%E4%B9%A0%E9%A2%98%E7%AC%94%E8%AE%B0/" title="C语言练习题笔记">C语言练习题笔记</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-06-11T11:29:30.730Z" title="发表于 2023-06-11 19:29:30">2023-06-11</time></span></div><div class="content">&#x2F;&#x2F;1,2,3,4能组成多少不重复的3位数1.将个位十位百位依次循环
+2.输出三个不等的情况
+123456789101112131415161718192021222324void test01()&#123;	int g, s, b;	int count=0;	for ( b = 1; b &lt; 5; b++)	&#123;		for (s = 1; s &lt; 5; s++)		&#123;			for ( g = 1; g &lt; 5; g++)			&#123;				if (b!=s&amp;&amp;s!=g&amp;&amp;b!=g)				&#123;					printf(&quot;%d\n&quot;, b * 100 + s * 10 + g);					count++;				&#125;				else				&#123;					continue;				&#125;			&#125;		&#125;	&#125;	printf(&quot;count=%d&quot;, count);&#125;
+
+&#x2F;*一个整数， ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2023/06/11/cc++%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="c/c++复习笔记">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="c/c++复习笔记"></a></div><div class="recent-post-info"><a class="article-title" href="/2023/06/11/cc++%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="c/c++复习笔记">c/c++复习笔记</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-06-11T11:29:30.720Z" title="发表于 2023-06-11 19:29:30">2023-06-11</time></span></div><div class="content">文件读取问题12345678910111213141516#include&lt;fstream&gt;ifstream ifs;ifs.open(&quot;123.txt&quot;, ios::in);if (!ifs.is_open())&#123;	cout &lt;&lt; &quot;没有这个文件！&quot; &lt;&lt; endl;	return 0;&#125;string data;while (ifs&gt;&gt;data)&#123;	cout &lt;&lt; data &lt;&lt; endl;&#125;ifs.close();//如果碰到中文无法读取问题，将txt格式编码方式改为ANSI格式
+
+123ofstream ofs(&quot;speech.csv&quot;, ios::trunc);		ofs.close();//清空文件
+
+</div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside_content" id="aside_content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://s1.ax1x.com/2023/06/11/pCZPfxO.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Shu</div><div class="author-info__description">Postgradute</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">12</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/SHU113" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:sz13129935787@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div></div><div class="card-widget card-announcement"><div class="card-content"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="card-content"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/06/13/%E8%8B%B1%E8%AF%AD%E4%BD%9C%E6%96%87%E6%A8%A1%E6%9D%BF/" title="英语作文模板"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="英语作文模板"/></a><div class="content"><a class="title" href="/2023/06/13/%E8%8B%B1%E8%AF%AD%E4%BD%9C%E6%96%87%E6%A8%A1%E6%9D%BF/" title="英语作文模板">英语作文模板</a><time datetime="2023-06-13T12:10:50.415Z" title="发表于 2023-06-13 20:10:50">2023-06-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/06/12/%E6%94%BF%E6%B2%BB%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/" title="政治期末考试"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="政治期末考试"/></a><div class="content"><a class="title" href="/2023/06/12/%E6%94%BF%E6%B2%BB%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/" title="政治期末考试">政治期末考试</a><time datetime="2023-06-12T01:34:34.502Z" title="发表于 2023-06-12 09:34:34">2023-06-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/06/11/C++%E6%8F%90%E9%AB%98%E7%BC%96%E7%A8%8B/" title="c++提高编程"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="c++提高编程"/></a><div class="content"><a class="title" href="/2023/06/11/C++%E6%8F%90%E9%AB%98%E7%BC%96%E7%A8%8B/" title="c++提高编程">c++提高编程</a><time datetime="2023-06-11T11:29:30.821Z" title="发表于 2023-06-11 19:29:30">2023-06-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/06/11/C++%E6%A0%B8%E5%BF%83%E7%BC%96%E7%A8%8B/" title="c++核心编程"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="c++核心编程"/></a><div class="content"><a class="title" href="/2023/06/11/C++%E6%A0%B8%E5%BF%83%E7%BC%96%E7%A8%8B/" title="c++核心编程">c++核心编程</a><time datetime="2023-06-11T11:29:30.799Z" title="发表于 2023-06-11 19:29:30">2023-06-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/06/11/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" title="数据结构"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="数据结构"/></a><div class="content"><a class="title" href="/2023/06/11/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" title="数据结构">数据结构</a><time datetime="2023-06-11T11:29:30.786Z" title="发表于 2023-06-11 19:29:30">2023-06-11</time></div></div></div></div></div><div class="card-widget card-archives"><div class="card-content"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/06/"><span class="card-archive-list-date">六月 2023</span><span class="card-archive-list-count">12</span></a></li></ul></div></div><div class="card-widget card-webinfo"><div class="card-content"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">12</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2023-06-13T13:48:26.762Z"></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Shu</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><button id="hide-aside-btn" type="button"><i class="fas fa-arrows-alt-h"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><div class="js-pjax"><script>function subtitleType () {
+  if (true) { 
+    var typed = new Typed("#subtitle", {
+      strings: "今天也要好好学习".split(","),
+      startDelay: 300,
+      typeSpeed: 150,
+      loop: true,
+      backSpeed: 50
+    })
+  } else {
+    document.getElementById("subtitle").innerHTML = '今'
+  }
+}
+
+if (true) {
+  if (typeof Typed === 'function') subtitleType()
+  else $.getScript('https://cdn.jsdelivr.net/npm/typed.js/lib/typed.min.js', subtitleType)
+} else {
+  subtitleType()
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-heart.min.js" async="async" mobile="false"></script></div></body></html>

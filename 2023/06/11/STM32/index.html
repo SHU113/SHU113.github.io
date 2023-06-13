@@ -1,0 +1,256 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>STM32 | Shu's Blog</title><meta name="author" content="Shu"><meta name="copyright" content="Shu"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="STM32 学习写固件库 1234567891011121314151617181920212223242526272829303132333435363738#define PERIPH_BASE ((unsigned int)0x40000000)&#x2F;&#x2F;把地址转成无符号数整形，不然编译器只会当成一个立即数处理#define APB1PERIPH_BASE PERIPH_BASE#define A">
+<meta property="og:type" content="article">
+<meta property="og:title" content="STM32">
+<meta property="og:url" content="https://shu113.github.io/2023/06/11/STM32/index.html">
+<meta property="og:site_name" content="Shu&#39;s Blog">
+<meta property="og:description" content="STM32 学习写固件库 1234567891011121314151617181920212223242526272829303132333435363738#define PERIPH_BASE ((unsigned int)0x40000000)&#x2F;&#x2F;把地址转成无符号数整形，不然编译器只会当成一个立即数处理#define APB1PERIPH_BASE PERIPH_BASE#define A">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2023-06-11T11:29:30.767Z">
+<meta property="article:modified_time" content="2023-06-13T03:08:18.555Z">
+<meta property="article:author" content="Shu">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://shu113.github.io/2023/06/11/STM32/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2023-06-13 11:08:18'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://s1.ax1x.com/2023/06/11/pCZPfxO.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">12</div></a></div></div></div><hr/></div></div><div id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Shu's Blog</a></span><span id="menus"><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><h1 class="post-title">STM32</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-06-11T11:29:30.767Z" title="发表于 2023-06-11 19:29:30">2023-06-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-06-13T03:08:18.555Z" title="更新于 2023-06-13 11:08:18">2023-06-13</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>STM32</p>
+<p>学习写固件库</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> PERIPH_BASE ((unsigned int)0x40000000)<span class="comment">//把地址转成无符号数整形，不然编译器只会当成一个立即数处理</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> APB1PERIPH_BASE PERIPH_BASE</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> APB2PERIPH_BASE (APB1PERIPH_BASE+0x10000)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> AHBPERIPH_BASE (PERIPH_BASE+0x20000)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> RCC_BASE (AHBPERIPH_BASE+0x1000)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> GPIOB_BASE (APB2PERIPH_BASE+0x0C00)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> RCC_APB2ENR *(unsigned int*)(RCC_BASE+0x18)<span class="comment">//一个无符号数的指针，解指针</span></span></span><br><span class="line">	</span><br><span class="line"><span class="keyword">typedef</span>  <span class="type">unsigned</span> <span class="type">int</span>      <span class="type">uint32_t</span>;</span><br><span class="line"><span class="keyword">typedef</span>  <span class="type">unsigned</span> <span class="type">short</span>    <span class="type">uint16_t</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="type">uint32_t</span> CR;</span><br><span class="line">	<span class="type">uint32_t</span> CFGR;</span><br><span class="line">	<span class="type">uint32_t</span> CIR;</span><br><span class="line">	<span class="type">uint32_t</span> APB2RSTR;</span><br><span class="line">	<span class="type">uint32_t</span> APB1RSTR;</span><br><span class="line">	<span class="type">uint32_t</span> AHBENR;</span><br><span class="line">	<span class="type">uint32_t</span> APB2ENR;</span><br><span class="line">	<span class="type">uint32_t</span> APB1ENR;</span><br><span class="line">	<span class="type">uint32_t</span> BDCR;</span><br><span class="line">	<span class="type">uint32_t</span> CSR;</span><br><span class="line">&#125;RCC_TypeDef;</span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="type">uint32_t</span> CRL;</span><br><span class="line">	<span class="type">uint32_t</span> CRH;</span><br><span class="line">	<span class="type">uint32_t</span> IDR;</span><br><span class="line">	<span class="type">uint32_t</span> ODR;</span><br><span class="line">	<span class="type">uint32_t</span> BSRR;</span><br><span class="line">	<span class="type">uint32_t</span> BRR;</span><br><span class="line">	<span class="type">uint32_t</span> LCKR;</span><br><span class="line">&#125;GPIO_TypeDef;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> GPIOB ((GPIO_TypeDef*)GPIOB_BASE)<span class="comment">//结构体类型的指针</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> RCC   ((RCC_TypeDef*)RCC_BASE)</span></span><br></pre></td></tr></table></figure>
+
+<p> STM固件库文件分析</p>
+<p>1.汇编写的启动文件</p>
+<p>设置堆栈指针、设置pc指针、初始化中断向量表、配置系统时钟、进入c文件</p>
+<p>时钟配置文件</p>
+<p>2.system_stm32f10x.c,把外部时钟HSE&#x3D;8M，经过PLL倍频为72M</p>
+<p>3.外设相关的</p>
+<p>stm32f10x.h：实现了内核外，  外设寄存器映射</p>
+<p>stm32f10x_xx.c外设的驱动函数库的文件</p>
+<p>stm32f10x_xx.h存放外设的初始化结构体，外设初始化结构体成员的参数列表，外设固件库函数的声明</p>
+<p>4.内核相关</p>
+<p>CMSIS-Cortex微控制器软件的接口标准</p>
+<p>core_cm3.h实现了内核中外设的寄存器映射</p>
+<p>core_cm3.c</p>
+<p> NVIC（嵌套向量中断控制器）、SysTick（系统嘀嗒定时器）</p>
+<p>misc.h</p>
+<p>misc.c</p>
+<p>5.头文件的配置文件</p>
+<p>stm32f10x_conf.h：头文件的全部头文件（简化调用）选择性打开需要的头文件</p>
+<p>6.专门存放中断服务函数的c文件</p>
+<p>stm32f10x_it.c</p>
+<p>stm32f10x_it.h</p>
+<p>中断服务函数可以随意放在其他的地方，并不一定要放在stm32f10x_it.c</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;&gt;和#include&quot;&quot;的区别</span><br><span class="line">前者是在系统的根目录中找头文件</span><br><span class="line">后者是在当前工程目录中找头文件</span><br><span class="line"></span><br><span class="line">#include&quot;stm32f10x.h&quot;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	//到这里系统时间已经被启动文件被配置成72M</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">LED_G(OFF);</span><br><span class="line"></span><br><span class="line">#define ON 1</span><br><span class="line">#define OFF 0</span><br><span class="line">#define LED_G(a) if(a) GPIO_WriteBit(LED_GPIO_PORT,LED_X_GPIO_Pin,Bit_SET); else GPIO_WriteBit(LED_GPIO_PORT,LED_X_GPIO_Pin,Bit_RESET);//带参数宏定义</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>十六位取其中1位</p>
+<p>![1679057343129](C:\Users\SHU ZHI\AppData\Roaming\Typora\typora-user-images\1679057343129.png)</p>
+<p>如果要取第0位</p>
+<p>uint_16 read</p>
+<p>uint_16 curr</p>
+<p>curr &#x3D; read &amp;（1&lt;&lt;0）</p>
+<p>如果要取前4位</p>
+<p>curr &#x3D; read &amp;（（1111）&lt;&lt;0）</p>
+<p>一个地址对应一个字节的存储单元也就是八位</p>
+<p>32位的机器一次能操作4个字节，也就是32位</p>
+<p>32位的机器的一个字长为32位</p>
+<p>![1679104474013](C:\Users\SHU ZHI\AppData\Roaming\Typora\typora-user-images\1679104474013.png)</p>
+<p>先可以看做是一个字长的32位每个位都变成了32位，那么每个端口都变成了32位，用四个地址存储，取下一个端口时，跳四个地址就行。</p>
+<p>![1679106471818](C:\Users\SHU ZHI\AppData\Roaming\Typora\typora-user-images\1679106471818.png)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">位操作</span><br><span class="line">#define GPIOB_ODR_Addr (GPIOB_BASE+0X0C)</span><br><span class="line">#define PBout(n)  *(unsigned int*)((GPIOB_ODR_Addr &amp; 0xF0000000)+0x02000000+((GPIOB_ODR_Addr &amp; 0x00FFFFFF)&lt;&lt;5)+(n&lt;&lt;2))</span><br><span class="line">void Delay(uint32_t count)</span><br><span class="line">&#123;</span><br><span class="line">	for(;count!=0;count--);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	GPIO_CONFIG();</span><br><span class="line">	KEY_GPIO_Config();</span><br><span class="line">#if 1 </span><br><span class="line">	while(1)</span><br><span class="line">	&#123;</span><br><span class="line">		//LED_G(OFF);</span><br><span class="line">		PBout(0) = 1;</span><br><span class="line">		Delay(0xFFFFF);</span><br><span class="line">		//LED_G(ON);</span><br><span class="line">		PBout(0) =  0;</span><br><span class="line">		Delay(0xFFFFF);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">#else</span><br><span class="line">	while(1)</span><br><span class="line">	&#123;</span><br><span class="line">		if(Key_Scan(KEY1_GPIO_PORT,KEY1_GPIO_Pin) == KEY_ON )</span><br><span class="line">			</span><br><span class="line">		LED_G_TOGGLE;</span><br><span class="line">		</span><br><span class="line">	&#125;		</span><br><span class="line"></span><br><span class="line">#endif</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>启动文件的作用</p>
+<p>1.初始化堆栈指针</p>
+<p>2.初始化pc指针</p>
+<p>3.初始化中断向量表</p>
+<p>4.配置系统时钟</p>
+<p>5.调用c库函数_main,最终去c的世界</p>
+<p>设置超频时钟的流程</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">HSE_SetSysClk</span><span class="params">(<span class="type">uint32_t</span> RCC_PLLMul_x)</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="comment">//定义ErrorStatus类型的数据用于接收等待启动函数的返回值</span></span><br><span class="line">	ErrorStatus HSEStatus;</span><br><span class="line">	<span class="comment">//时钟复位</span></span><br><span class="line">	RCC_DeInit();</span><br><span class="line">	<span class="comment">//使能HSE</span></span><br><span class="line">	RCC_HSEConfig(RCC_HSE_ON);</span><br><span class="line">	<span class="comment">//等待函数</span></span><br><span class="line">	HSEStatus = RCC_WaitForHSEStartUp();	</span><br><span class="line"><span class="keyword">if</span>(HSEStatus==SUCCESS)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//使能预取指令</span></span><br><span class="line">	FLASH_PrefetchBufferCmd(FLASH_PrefetchBuffer_Enable);</span><br><span class="line">	<span class="comment">//设置示SYSCLK(系统时钟)周期与闪存访问时间的比例</span></span><br><span class="line">	FLASH_SetLatency(FLASH_Latency_2);</span><br><span class="line">	<span class="comment">//AHB预分频</span></span><br><span class="line">	RCC_HCLKConfig(RCC_SYSCLK_Div1);</span><br><span class="line">	<span class="comment">//APB1预分频</span></span><br><span class="line">	RCC_PCLK1Config(RCC_HCLK_Div2);</span><br><span class="line">	<span class="comment">//APB2预分频</span></span><br><span class="line">  RCC_PCLK2Config(RCC_HCLK_Div1);</span><br><span class="line">	<span class="comment">//PLL设置源和倍频</span></span><br><span class="line">	RCC_PLLConfig(RCC_PLLSource_HSE_Div1, RCC_PLLMul_x);</span><br><span class="line">	<span class="comment">//使能</span></span><br><span class="line">	RCC_PLLCmd(ENABLE);</span><br><span class="line">	<span class="comment">//等待PLL时钟稳定</span></span><br><span class="line">	<span class="keyword">while</span>(RCC_GetFlagStatus(RCC_FLAG_PLLRDY) == RESET);</span><br><span class="line">	<span class="comment">//配置系统时钟的来源</span></span><br><span class="line">	RCC_SYSCLKConfig(RCC_SYSCLKSource_PLLCLK);</span><br><span class="line">	 <span class="comment">//判断是否时钟是PLL</span></span><br><span class="line">  <span class="keyword">while</span> (RCC_GetSYSCLKSource() != <span class="number">0x08</span>); </span><br><span class="line">&#125; </span><br><span class="line"><span class="keyword">else</span> </span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//如果函数添加失败，用户可以在这个添加代码</span></span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>NVIC中断嵌套向量表</p>
+<p>![1679363743033](C:\Users\SHU ZHI\AppData\Roaming\Typora\typora-user-images\1679363743033.png)</p>
+<p>中断编程顺序</p>
+<p>1.使能中断请求</p>
+<p>2.配置中断优先级分组</p>
+<p>3.配置NVIC寄存器，初始化NVIC_InitTypeDef</p>
+<p>4.编写中断服务函数</p>
+<p>写一个GPIO外部中断</p>
+<p>​	</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">EXTI_NVIC_Config</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//初始化NVIC</span></span><br><span class="line">	NVIC_InitTypeDef NVIC_InStruct;</span><br><span class="line">	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);</span><br><span class="line">	NVIC_InStruct.NVIC_IRQChannel = EXTI0_IRQn; </span><br><span class="line">	NVIC_InStruct.NVIC_IRQChannelPreemptionPriority = <span class="number">1</span>;</span><br><span class="line">	NVIC_InStruct.NVIC_IRQChannelSubPriority = <span class="number">1</span>;</span><br><span class="line">	NVIC_InStruct.NVIC_IRQChannelCmd = ENABLE;</span><br><span class="line">	NVIC_Init(&amp;NVIC_InStruct);	</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">void</span> <span class="title function_">EXTI_KEY_Config</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">GPIO_InitTypeDef GPIO_InStruct;</span><br><span class="line">EXTI_InitTypeDef EXIT_InStruct;</span><br><span class="line"><span class="comment">//配置中断优先级</span></span><br><span class="line">EXTI_NVIC_Config();</span><br><span class="line"><span class="comment">//初始化要连接到EXIT的GPIO </span></span><br><span class="line">RCC_APB2PeriphClockCmd(KEY_INT_GPIO_CLK,ENABLE);</span><br><span class="line">GPIO_InStruct.GPIO_Pin = KEY_INT_GPIO_Pin;</span><br><span class="line">GPIO_InStruct.GPIO_Mode = GPIO_Mode_IN_FLOATING;</span><br><span class="line">GPIO_Init(KEY_INT_GPIO_PORT,&amp;GPIO_InStruct);</span><br><span class="line"><span class="comment">//初始化EXTI用于产生中断</span></span><br><span class="line">RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO,ENABLE);</span><br><span class="line"><span class="comment">// Selects the GPIO pin used as EXTI Line.</span></span><br><span class="line">GPIO_EXTILineConfig(GPIO_PortSourceGPIOA,GPIO_PinSource0); </span><br><span class="line"></span><br><span class="line">EXIT_InStruct.EXTI_Line = EXTI_Line0;</span><br><span class="line">EXIT_InStruct.EXTI_Mode = EXTI_Mode_Interrupt;</span><br><span class="line">EXIT_InStruct.EXTI_Trigger = EXTI_Trigger_Rising;</span><br><span class="line">EXIT_InStruct.EXTI_LineCmd  = ENABLE;</span><br><span class="line">EXTI_Init(&amp;EXIT_InStruct);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>1.先配置好GPIO的端口</p>
+<p>开时钟</p>
+<p>设置GPIO初始化</p>
+<p>2.配置NVIC（另写一个函数）</p>
+<p>设置分组NVIC_PriorityGroupConfig</p>
+<p>初始化NVIC</p>
+<p>3.配置EXTI</p>
+<p>开EXTI的时钟（由于EXTI是映射信号EXTI的时钟就由AFIO提供）</p>
+<p>把输入线与端口相对应GPIO_EXTILineConfig</p>
+<p>初始化EXTI</p>
+<p>4.将中断服务函数写在it.c中函数名参考启动文件</p>
+<p>SYSTICK配置</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> __INLINE <span class="type">uint32_t</span> <span class="title function_">SysTick_Config</span><span class="params">(<span class="type">uint32_t</span> ticks)</span></span><br><span class="line">&#123; <span class="comment">//比较输入值和reload可配置的最大的值</span></span><br><span class="line">  <span class="keyword">if</span> (ticks &gt; SysTick_LOAD_RELOAD_Msk)  <span class="keyword">return</span> (<span class="number">1</span>);            <span class="comment">/* Reload value impossible */</span></span><br><span class="line">                                                               <span class="comment">//配置reload寄存器的初始值</span></span><br><span class="line">  SysTick-&gt;LOAD  = (ticks &amp; SysTick_LOAD_RELOAD_Msk) - <span class="number">1</span>;      <span class="comment">/* set reload register */</span></span><br><span class="line">    <span class="comment">//配置中断优先级为默认最低</span></span><br><span class="line">  NVIC_SetPriority (SysTick_IRQn, (<span class="number">1</span>&lt;&lt;__NVIC_PRIO_BITS) - <span class="number">1</span>);  <span class="comment">/* set Priority for Cortex-M0 System Interrupts */</span></span><br><span class="line">  <span class="comment">//配置计数器的值</span></span><br><span class="line">    SysTick-&gt;VAL   = <span class="number">0</span>;                                          <span class="comment">/* Load the SysTick Counter Value */</span></span><br><span class="line">    <span class="comment">//配置systick的时钟为72M</span></span><br><span class="line">    <span class="comment">//使能中断</span></span><br><span class="line">    <span class="comment">//使能systick</span></span><br><span class="line">  SysTick-&gt;CTRL  = SysTick_CTRL_CLKSOURCE_Msk | </span><br><span class="line">                   SysTick_CTRL_TICKINT_Msk   | </span><br><span class="line">                   SysTick_CTRL_ENABLE_Msk;                    <span class="comment">/* Enable SysTick IRQ and SysTick Timer */</span></span><br><span class="line">  <span class="keyword">return</span> (<span class="number">0</span>);                                                  <span class="comment">/* Function successful */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>![1679707468958](C:\Users\SHU ZHI\AppData\Roaming\Typora\typora-user-images\1679707468958.png)</p>
+<p>当第16位为1表示已经计数到0了</p>
+<p>做一个ms延时</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">SysTick_Delay_ms</span><span class="params">(<span class="type">uint32_t</span> ms)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">uint32_t</span> i;</span><br><span class="line">	<span class="comment">//reload72000</span></span><br><span class="line">	SysTick_Config(<span class="number">72000</span>);</span><br><span class="line">	<span class="comment">//记1000次计数周期</span></span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;ms;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//当第16位置1时跳出循环，表示一个计数周期已到</span></span><br><span class="line">		<span class="keyword">while</span>(!((SysTick-&gt;CTRL)&amp;(<span class="number">1</span>&lt;&lt;<span class="number">16</span>))) </span><br><span class="line">		&#123;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//中断失能</span></span><br><span class="line">	SysTick-&gt;CTRL &amp;= ~(SysTick_CTRL_ENABLE_Msk);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通信的基本概念</p>
+<p> ![1679712326509](C:\Users\SHU ZHI\AppData\Roaming\Typora\typora-user-images\1679712326509.png)</p>
+<p>串口：数据位是一位一位的发送出去</p>
+<p>常用串口的协议有：USART、IIC、SPI、ISB、MSB</p>
+<p>并行：数据位是多位一起传输</p>
+<p>常用并行口协议：SDIO、FSMC（16）位</p>
+<p>![1679712548369](C:\Users\SHU ZHI\AppData\Roaming\Typora\typora-user-images\1679712548369.png)</p>
+<p>全双工：可同时收发数据</p>
+<p>半双工：不可同时收发数据（可分时收发数据）</p>
+<p>单工：任何时候只能往一个固定方向传输数据 </p>
+<p>同步：有时钟信号</p>
+<p>异步：数据位上有传输的位</p>
+<p>![1679713265087](C:\Users\SHU ZHI\AppData\Roaming\Typora\typora-user-images\1679713265087.png)</p>
+<p>比特率：每秒传输二进制的<strong>位数</strong></p>
+<p>波特率：每秒钟传输<strong>码元</strong>个数</p>
+<p>当一个二进制位表示一个码元时比特率等于波特率</p>
+<p>![1679714195048](C:\Users\SHU ZHI\AppData\Roaming\Typora\typora-user-images\1679714195048.png)</p>
+<p>串口通信</p>
+<p>RS-232标准±15表示电频</p>
+<p>![1679726513722](C:\Users\SHU ZHI\AppData\Roaming\Typora\typora-user-images\1679726513722.png)</p>
+<p>一般用于工业设备直接通信</p>
+<p>正15v表示1</p>
+<p>串口通信</p>
+<p>![1679728618382](C:\Users\SHU ZHI\AppData\Roaming\Typora\typora-user-images\1679728618382.png)</p>
+<p>![1679729171717](C:\Users\SHU ZHI\AppData\Roaming\Typora\typora-user-images\1679729171717.png) </p>
+<p>内存的对比</p>
+<p>![1680491096266](C:\Users\SHU ZHI\AppData\Roaming\Typora\typora-user-images\1680491096266.png)</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Shu</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://shu113.github.io/2023/06/11/STM32/">https://shu113.github.io/2023/06/11/STM32/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://SHU113.github.io" target="_blank">Shu's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/06/11/%E7%AC%AC%E4%B8%80%E7%AB%A0/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">c++学习笔记</div></div></a></div><div class="next-post pull-right"><a href="/2023/06/11/qt%E5%AD%A6%E4%B9%A0/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">QT学习笔记</div></div></a></div></nav></div><div class="aside_content" id="aside_content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://s1.ax1x.com/2023/06/11/pCZPfxO.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Shu</div><div class="author-info__description">Postgradute</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">12</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/SHU113" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:sz13129935787@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div></div><div class="card-widget card-announcement"><div class="card-content"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="card-content"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/06/13/%E8%8B%B1%E8%AF%AD%E4%BD%9C%E6%96%87%E6%A8%A1%E6%9D%BF/" title="英语作文模板"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="英语作文模板"/></a><div class="content"><a class="title" href="/2023/06/13/%E8%8B%B1%E8%AF%AD%E4%BD%9C%E6%96%87%E6%A8%A1%E6%9D%BF/" title="英语作文模板">英语作文模板</a><time datetime="2023-06-13T12:10:50.415Z" title="发表于 2023-06-13 20:10:50">2023-06-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/06/12/%E6%94%BF%E6%B2%BB%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/" title="政治期末考试"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="政治期末考试"/></a><div class="content"><a class="title" href="/2023/06/12/%E6%94%BF%E6%B2%BB%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/" title="政治期末考试">政治期末考试</a><time datetime="2023-06-12T01:34:34.502Z" title="发表于 2023-06-12 09:34:34">2023-06-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/06/11/C++%E6%8F%90%E9%AB%98%E7%BC%96%E7%A8%8B/" title="c++提高编程"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="c++提高编程"/></a><div class="content"><a class="title" href="/2023/06/11/C++%E6%8F%90%E9%AB%98%E7%BC%96%E7%A8%8B/" title="c++提高编程">c++提高编程</a><time datetime="2023-06-11T11:29:30.821Z" title="发表于 2023-06-11 19:29:30">2023-06-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/06/11/C++%E6%A0%B8%E5%BF%83%E7%BC%96%E7%A8%8B/" title="c++核心编程"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="c++核心编程"/></a><div class="content"><a class="title" href="/2023/06/11/C++%E6%A0%B8%E5%BF%83%E7%BC%96%E7%A8%8B/" title="c++核心编程">c++核心编程</a><time datetime="2023-06-11T11:29:30.799Z" title="发表于 2023-06-11 19:29:30">2023-06-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/06/11/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" title="数据结构"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="数据结构"/></a><div class="content"><a class="title" href="/2023/06/11/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" title="数据结构">数据结构</a><time datetime="2023-06-11T11:29:30.786Z" title="发表于 2023-06-11 19:29:30">2023-06-11</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Shu</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><button id="hide-aside-btn" type="button"><i class="fas fa-arrows-alt-h"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-heart.min.js" async="async" mobile="false"></script></div></body></html>
